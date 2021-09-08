@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace PromotionEngine.UnitTests
 {
-    public class Tests
+    public class CartTests
     {
         [SetUp]
         public void Setup()
