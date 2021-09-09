@@ -74,6 +74,11 @@ namespace PromotionEngine.UnitTests
 
             var discount = combinedItemPromo.CalculateDiscount(cart);
 
+            cart.PromotionAppliedSKUs.Count.Should().Be(2);
+
+            cart.PromotionAppliedSKUs.Should().Contain("C");
+            cart.PromotionAppliedSKUs.Should().Contain("D");
+
             discount.Should().Be(5);
         }
 

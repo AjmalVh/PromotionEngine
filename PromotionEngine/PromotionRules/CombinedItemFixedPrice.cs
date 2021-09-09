@@ -41,7 +41,7 @@ namespace PromotionEngine.PromotionRules
 
                 var totalDiscount = (originalPricePerBundle - FixedPrice) * numberOfBundles;
 
-
+                cart.PromotionAppliedSKUs.UnionWith(CombinedDiscountSKUs);
 
                 return totalDiscount;
             }
