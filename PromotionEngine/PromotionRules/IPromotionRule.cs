@@ -5,7 +5,7 @@ namespace PromotionEngine.PromotionRules
     public interface IPromotionRule
     {
         /// <summary>
-        /// Calculate applicable discount
+        /// Calculate applicable discount after applying a promotion
         /// </summary>
         /// <param name="cart"></param>
         /// <returns>Discounted price after applying this promotion rule</returns>
