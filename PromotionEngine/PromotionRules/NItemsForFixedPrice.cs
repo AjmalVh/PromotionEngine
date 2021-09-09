@@ -1,9 +1,5 @@
 ﻿using PromotionEngine.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PromotionEngine.PromotionRules
 {
@@ -38,18 +34,16 @@ namespace PromotionEngine.PromotionRules
         {
             if (this.IsApplicable(cart))
             {
-                var thisProductInCart = cart.CartItems.Where(item => item.Product.SKU == this.SKU);
+                var thisProductInCart = cart.GetProduct(this.SKU);
 
-                var unitPrice = thisProductInCart.FirstOrDefault().Product.Price;
+                var unitPrice = thisProductInCart.First().Product.Price;
                 var quantityInCart = thisProductInCart.Count();
-                var originalPrice = unitPrice * quantityInCart;
 
                 var discountFromOriginalPrice = (unitPrice * QuantityRequired) - FixedPrice;
 
                 var numberOfDiscountedBundles = quantityInCart / QuantityRequired;
 
                 var totalDiscount = discountFromOriginalPrice * numberOfDiscountedBundles;
-                var discountAppliedProductCount = numberOfDiscountedBundles * QuantityRequired;
 
                 return totalDiscount;
             }
@@ -60,7 +54,7 @@ namespace PromotionEngine.PromotionRules
         
         public bool IsApplicable(Cart cart)
         {
-            var thisProductInCart = cart.CartItems.Where(item => item.Product.SKU == this.SKU);
+            var thisProductInCart = cart.GetProduct(this.SKU);
 
             if (thisProductInCart.Any()
                 && (thisProductInCart.Count() >= this.QuantityRequired)

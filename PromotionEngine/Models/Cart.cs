@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace PromotionEngine.Models
 {
@@ -20,6 +21,12 @@ namespace PromotionEngine.Models
         /// </summary>
         public List<string> PromotionAppliedSKUs { get; set; }
 
+        /// <summary>
+        /// Add products to cart
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
         public Cart AddToCart(Product product, int quantity)
         {
             for (int i = 0; i < quantity; i++)
@@ -29,6 +36,16 @@ namespace PromotionEngine.Models
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Get products in cart with given SKU
+        /// </summary>
+        /// <param name="sku"></param>
+        /// <returns></returns>
+        public IEnumerable<CartItem> GetProduct(string sku)
+        {
+            return this.CartItems.Where(x => x.Product.SKU == sku);
         }
     }
 }
