@@ -51,5 +51,30 @@ namespace PromotionEngine.UnitTests
 
             combinedItemFixedPricePromo.IsApplicable(cart).Should().BeFalse();
         }
+
+
+        [Test]
+        public void CalculateDiscount()
+        {
+            // Unit price for C = 20
+            // Unit price for D = 15
+            // C & D for 30
+
+            Cart cart = new();
+
+            List<string> skus = new() { "C", "D" };
+            decimal fixedPrice = 30;
+            IPromotionRule combinedItemPromo = new CombinedItemFixedPrice(skus, fixedPrice);
+
+            Product prodC = new("C", 20);
+            Product prodD = new("D", 15);
+
+            cart.AddToCart(prodC, 1);
+            cart.AddToCart(prodD, 1);
+
+            var discount = combinedItemPromo.CalculateDiscount(cart);
+
+            discount.Should().Be(5);
+        }
     }
 }

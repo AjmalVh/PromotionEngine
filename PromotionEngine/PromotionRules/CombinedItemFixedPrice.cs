@@ -28,7 +28,23 @@ namespace PromotionEngine.PromotionRules
 
         public decimal CalculateDiscount(Cart cart)
         {
-            throw new NotImplementedException();
+            if (IsApplicable(cart))
+            {
+                var applicableProductsInCart = cart.CartItems
+                    .Where(item => this.CombinedDiscountSKUs.Contains(item.Product.SKU));
+
+                var numberOfBundles = applicableProductsInCart
+                    .GroupBy(item => item.Product.SKU).Min(x => x.Count());
+
+                var originalPricePerBundle = this.CombinedDiscountSKUs
+                    .Sum(sku => cart.CartItems.First(cartItem => cartItem.Product.SKU == sku).Product.Price);
+
+                var totalDiscount = (originalPricePerBundle - FixedPrice) * numberOfBundles;
+
+                return totalDiscount;
+            }
+
+            return default;
         }
 
         public bool IsApplicable(Cart cart)
