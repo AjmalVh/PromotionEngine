@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PromotionEngine.PromotionRules;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PromotionEngine.Models
@@ -39,6 +40,23 @@ namespace PromotionEngine.Models
         }
 
         /// <summary>
+        /// Calculate toal price after applying all active promotions for eligible items
+        /// </summary>
+        /// <param name="activePromotions"></param>
+        /// <returns>Total price after applying any active discounts</returns>
+        public decimal CalculateTotalPrice(IEnumerable<IPromotionRule> activePromotions)
+        {
+            decimal totalDiscount = 0M;
+
+            foreach (var promo in activePromotions)
+            {
+                totalDiscount += promo.CalculateDiscount(this);
+            }
+
+            return GetTotalPriceWithoutDiscounts() - totalDiscount;
+        }
+
+        /// <summary>
         /// Get products in cart with given SKU
         /// </summary>
         /// <param name="sku"></param>
@@ -46,6 +64,15 @@ namespace PromotionEngine.Models
         public IEnumerable<CartItem> GetProduct(string sku)
         {
             return this.CartItems.Where(x => x.Product.SKU == sku);
+        }
+
+        /// <summary>
+        /// Calculate total price excluding discounts
+        /// </summary>
+        /// <returns></returns>
+        public decimal GetTotalPriceWithoutDiscounts()
+        {
+            return this.CartItems.Sum(x => x.Product.Price);
         }
     }
 }
