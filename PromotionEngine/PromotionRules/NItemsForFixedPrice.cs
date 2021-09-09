@@ -1,4 +1,5 @@
 ﻿using PromotionEngine.Models;
+using System;
 using System.Linq;
 
 namespace PromotionEngine.PromotionRules
@@ -10,6 +11,9 @@ namespace PromotionEngine.PromotionRules
         /// <param name="fixedPrice">Fixed discounted price</param>
         public NItemsForFixedPrice(string sku, int quantityRequired, decimal fixedPrice)
         {
+            if (string.IsNullOrEmpty(sku)) throw new ArgumentNullException("Invalid SKU");
+            if (quantityRequired is default(int)) throw new ArgumentNullException("Invalid QuantityRequired");
+
             this.SKU = sku;
             this.FixedPrice = fixedPrice;
             this.QuantityRequired = quantityRequired;

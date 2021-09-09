@@ -9,6 +9,8 @@ namespace PromotionEngine.PromotionRules
     {
         public CombinedItemFixedPrice(IEnumerable<string> skus, decimal fixedPrice)
         {
+            if(skus?.Count() < 2) throw new ArgumentException("Atleast 2 SKUs must be provided for this promotion");
+
             this.CombinedDiscountSKUs = skus;
             this.FixedPrice = fixedPrice;
         }
