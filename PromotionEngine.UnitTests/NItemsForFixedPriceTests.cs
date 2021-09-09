@@ -77,6 +77,7 @@ namespace PromotionEngine.UnitTests
             cart.AddToCart(productA, 3);
 
             var discount = nItemsForFixedPrice.CalculateDiscount(cart);
+
             discount.Should().Be(20);
         }
 
@@ -95,7 +96,11 @@ namespace PromotionEngine.UnitTests
             cart.AddToCart(productA, 8);
 
             var discount = nItemsForFixedPrice.CalculateDiscount(cart);
+
             discount.Should().Be(40);
+
+            cart.PromotionAppliedSKUs.Count.Should().Be(1);
+            cart.PromotionAppliedSKUs.Should().Contain("A");
         }
 
     }

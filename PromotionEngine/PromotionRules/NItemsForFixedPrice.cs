@@ -45,6 +45,8 @@ namespace PromotionEngine.PromotionRules
 
                 var totalDiscount = discountFromOriginalPrice * numberOfDiscountedBundles;
 
+                cart.PromotionAppliedSKUs.Add(this.SKU);
+
                 return totalDiscount;
             }
 
