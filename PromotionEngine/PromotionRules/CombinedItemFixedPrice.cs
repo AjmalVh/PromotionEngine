@@ -9,17 +9,22 @@ namespace PromotionEngine.PromotionRules
 {
     public class CombinedItemFixedPrice : IPromotionRule
     {
-        public decimal FixedPrice { get; set; }
+        public CombinedItemFixedPrice(IEnumerable<string> skus, decimal fixedPrice)
+        {
+            this.CombinedDiscountSKUs = skus;
+            this.FixedPrice = fixedPrice;
+        }
 
         /// <summary>
-        /// SKU of product 1 combo offer
+        /// List of SKUs for combined offer
         /// </summary>
-        public string SKU1 { get; set; }
+        public IEnumerable<string> CombinedDiscountSKUs { get; private set; }
 
         /// <summary>
-        /// SKU of product 2 combo offer
+        /// Fixed price for this SKU combination
         /// </summary>
-        public string SKU2 { get; set; }
+        public decimal FixedPrice { get; private set; }
+
 
         public decimal CalculateDiscount(Cart cart)
         {
@@ -28,7 +33,8 @@ namespace PromotionEngine.PromotionRules
 
         public bool IsApplicable(Cart cart)
         {
-            throw new NotImplementedException();
+            return cart.CartItems.Where(x => !cart.PromotionAppliedSKUs.Contains(x.Product.SKU))
+                .Select(item => item.Product.SKU).Intersect(CombinedDiscountSKUs).Count() > 1;
         }
     }
 }
