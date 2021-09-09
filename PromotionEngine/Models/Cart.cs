@@ -7,6 +7,7 @@ namespace PromotionEngine.Models
         public Cart()
         {
             this.CartItems = new List<CartItem>();
+            this.PromotionAppliedSKUs = new List<string>();
         }
 
         /// <summary>

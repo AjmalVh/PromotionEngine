@@ -36,13 +36,35 @@ namespace PromotionEngine.PromotionRules
 
         public decimal CalculateDiscount(Cart cart)
         {
-            throw new NotImplementedException();
+            if (this.IsApplicable(cart))
+            {
+                var thisProductInCart = cart.CartItems.Where(item => item.Product.SKU == this.SKU);
+
+                var unitPrice = thisProductInCart.FirstOrDefault().Product.Price;
+                var quantityInCart = thisProductInCart.Count();
+                var originalPrice = unitPrice * quantityInCart;
+
+                var discountFromOriginalPrice = (unitPrice * QuantityRequired) - FixedPrice;
+
+                var numberOfDiscountedBundles = quantityInCart / QuantityRequired;
+
+                var totalDiscount = discountFromOriginalPrice * numberOfDiscountedBundles;
+                var discountAppliedProductCount = numberOfDiscountedBundles * QuantityRequired;
+
+                return totalDiscount;
+            }
+
+            return default;
         }
 
         
         public bool IsApplicable(Cart cart)
         {
-            if (cart.CartItems.Any() && !cart.PromotionAppliedSKUs.Contains(this.SKU))
+            var thisProductInCart = cart.CartItems.Where(item => item.Product.SKU == this.SKU);
+
+            if (thisProductInCart.Any()
+                && (thisProductInCart.Count() >= this.QuantityRequired)
+                && !cart.PromotionAppliedSKUs.Contains(this.SKU))
             {
                 return true;
             }
