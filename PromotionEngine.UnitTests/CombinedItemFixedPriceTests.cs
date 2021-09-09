@@ -2,11 +2,7 @@
 using NUnit.Framework;
 using PromotionEngine.Models;
 using PromotionEngine.PromotionRules;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PromotionEngine.UnitTests
 {

@@ -3,7 +3,6 @@ using NUnit.Framework;
 using PromotionEngine.Models;
 using PromotionEngine.PromotionRules;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PromotionEngine.UnitTests
 {
