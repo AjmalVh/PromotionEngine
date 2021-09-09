@@ -22,7 +22,7 @@ namespace PromotionEngine.UnitTests
             Product productA = new("A", 50);
             cart.AddToCart(productA, 5);
 
-            cart.PromotionAppliedSKUs = new List<string>
+            cart.PromotionAppliedSKUs = new HashSet<string>
             {
                 "A", "C"
             };
@@ -53,7 +53,7 @@ namespace PromotionEngine.UnitTests
             Product productA = new("A", 50);
             cart.AddToCart(productA, 3);
 
-            cart.PromotionAppliedSKUs = new List<string>
+            cart.PromotionAppliedSKUs = new HashSet<string>
             {
                 "B", "C"
             };

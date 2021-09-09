@@ -23,7 +23,7 @@ namespace PromotionEngine.UnitTests
             cart.AddToCart(productC, 1);
             cart.AddToCart(productD, 1);
 
-            cart.PromotionAppliedSKUs = new List<string> { "A", "C" };
+            cart.PromotionAppliedSKUs = new HashSet<string> { "A", "C" };
 
             List<string> combinedItemsPromoSkus = new() { "C", "D" };
             decimal fixedPrice = 30;

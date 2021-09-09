@@ -8,7 +8,7 @@ namespace PromotionEngine.Models
         public Cart()
         {
             this.CartItems = new List<CartItem>();
-            this.PromotionAppliedSKUs = new List<string>();
+            this.PromotionAppliedSKUs = new HashSet<string>();
         }
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace PromotionEngine.Models
         /// <summary>
         /// List of SKUs where promotion is already applied
         /// </summary>
-        public List<string> PromotionAppliedSKUs { get; set; }
+        public HashSet<string> PromotionAppliedSKUs { get; set; }
 
         /// <summary>
         /// Add products to cart

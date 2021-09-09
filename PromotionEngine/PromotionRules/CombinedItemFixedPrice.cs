@@ -41,6 +41,8 @@ namespace PromotionEngine.PromotionRules
 
                 var totalDiscount = (originalPricePerBundle - FixedPrice) * numberOfBundles;
 
+
+
                 return totalDiscount;
             }
 
