@@ -54,6 +54,29 @@ namespace PromotionEngine.UnitTests
             totalPrice.Should().Be(100);
         }
 
+        [Test]
+        public void Calculate_Total_Price_Scenario_B()
+        {
+            // Scenario	B	
+            // 5 * A 130 + 2*50
+            // 5 * B 45 + 45 + 30
+            // 1 * C 20
+            // Total   370
+
+            var allActivePromos = GetAllActivePromotions();
+
+            Product productA = new("A", 50);
+            Product productB = new("B", 30);
+            Product productC = new("C", 20);
+
+            cart.AddToCart(productA, 5);
+            cart.AddToCart(productB, 5);
+            cart.AddToCart(productC, 1);
+
+            var totalPrice = cart.CalculateTotalPrice(allActivePromos);
+
+            totalPrice.Should().Be(370);
+        }
 
         private IEnumerable<IPromotionRule> GetAllActivePromotions()
         {
