@@ -10,9 +10,9 @@ namespace PromotionEngine.PromotionRules
     public class NItemsForFixedPrice : IPromotionRule
     {
         /// <param name="sku">SKU of the product which this offer applies</param>
-        /// <param name="fixedPrice">Fixed discounted price</param>
         /// <param name="quantityRequired"> Quantity for items required for this promotion</param>
-        public NItemsForFixedPrice(string sku, decimal fixedPrice, int quantityRequired)
+        /// <param name="fixedPrice">Fixed discounted price</param>
+        public NItemsForFixedPrice(string sku, int quantityRequired, decimal fixedPrice)
         {
             this.SKU = sku;
             this.FixedPrice = fixedPrice;

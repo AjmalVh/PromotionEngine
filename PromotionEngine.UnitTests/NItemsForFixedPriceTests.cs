@@ -32,5 +32,23 @@ namespace PromotionEngine.UnitTests
             nItemsForFixedPricePromo.IsApplicable(cart).Should().BeFalse();
         }
 
+        
+        [Test]
+        public void CalculateDiscount()
+        {
+            // Unit price for A = 50
+            // 3 of A's for 130
+
+            IPromotionRule nItemsForFixedPrice = new NItemsForFixedPrice("A", 3, 130);
+
+            Cart cart = new();
+
+            Product productA = new("A", 50);
+            cart.AddToCart(productA, 3);
+
+            var discount = nItemsForFixedPrice.CalculateDiscount(cart);
+            discount.Should().Be(20);
+        }
+
     }
 }
