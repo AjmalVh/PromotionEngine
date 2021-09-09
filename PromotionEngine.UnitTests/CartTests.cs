@@ -9,12 +9,17 @@ namespace PromotionEngine.UnitTests
 {
     public class CartTests
     {
+        Cart cart;
+
+        [SetUp]
+        public void Setup()
+        {
+            cart = new Cart();
+        }
 
         [Test]
         public void CartCanAddItems()
         {
-            Cart cart = new();
-
             Product productA = new("A", 50);
             Product productB = new("B", 30);
 
@@ -34,31 +39,17 @@ namespace PromotionEngine.UnitTests
             // 1 * C 20
             //Total = 100
 
-
-            IPromotionRule nItemsForFixedPriceA = new NItemsForFixedPrice("A", 3, 130);
-
-            IPromotionRule nItemsForFixedPriceB = new NItemsForFixedPrice("B", 2, 45);
-
-            List<string> comboPromoSkus = new() { "C", "D" };
-            IPromotionRule combinedItemFixedPrice = new CombinedItemFixedPrice(comboPromoSkus, 30);
-
-            List<IPromotionRule> activePromotions = new()
-            {
-                nItemsForFixedPriceA,
-                nItemsForFixedPriceB,
-                combinedItemFixedPrice
-            };
+            var allActivePromos = GetAllActivePromotions();
 
             Product productA = new("A", 50);
             Product productB = new("B", 30);
             Product productC = new("C", 20);
 
-            Cart cart = new();
             cart.AddToCart(productA, 1);
             cart.AddToCart(productB, 1);
             cart.AddToCart(productC, 1);
 
-            var totalPrice = cart.CalculateTotalPrice(activePromotions);
+            var totalPrice = cart.CalculateTotalPrice(allActivePromos);
 
             totalPrice.Should().Be(100);
         }
