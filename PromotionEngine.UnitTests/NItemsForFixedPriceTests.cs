@@ -80,5 +80,23 @@ namespace PromotionEngine.UnitTests
             discount.Should().Be(20);
         }
 
+        [Test]
+        public void CalculateDiscount_Extra_Items_Involved()
+        {
+            // Unit price for A = 50
+            // Offer: 3 of A's for 130
+            // Cart: 8A
+
+            IPromotionRule nItemsForFixedPrice = new NItemsForFixedPrice("A", 3, 130);
+
+            Cart cart = new();
+
+            Product productA = new("A", 50);
+            cart.AddToCart(productA, 8);
+
+            var discount = nItemsForFixedPrice.CalculateDiscount(cart);
+            discount.Should().Be(40);
+        }
+
     }
 }
